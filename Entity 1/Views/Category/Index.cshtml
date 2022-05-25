@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Entity_1.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+ <input class = "form-control" placeholder = "Pretraga" onkeyup="categorySearch(event,this.value)";/>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.CategoryId  }) |
+                @Html.ActionLink("Details", "Details", new { id=item.CategoryId  }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.CategoryId },new {onclick = "return DeleteCategoryModal();"})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        function DeleteCategoryModal(){
+            return confirm ("Da li ste sigurni da zelite da izbrisete")
+        }
+        function categorySearch(e,filter){
+            if(e.keyCode == 13)
+            {
+                window.location.href = "/Category/Index?filter=" + filter;
+            }
+        }
+    </script>
+}
